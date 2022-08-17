@@ -1,0 +1,110 @@
+﻿@using HR_SystemProject.ViewModel
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model EmployeeViewModel
+@{
+    ViewData["Title"] = "Edit";
+    SelectList DeptList = new SelectList(Model.Departments, "ID", "Name");
+}
+
+<h1 class="mb-5">Update Employee Data</h1>
+
+<form class="row g-3" method="post" asp-controller="Employee" asp-action="Update" type="text" asp-route-id=@Model.Id>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="SSN" class="form-label"></label>
+            <input asp-for="SSN" class="form-control" value=@Model.SSN/>
+            <span asp-validation-for="SSN" class="text-danger"></span>
+        </div>
+    
+        <div class="col-md-4">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" value=@Model.Name/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+     
+     
+        <div class="col-md-4">
+            <label asp-for="Address" class="form-label"></label>
+            <input asp-for="Address" class="form-control" value=@Model.Address/>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+     </div>
+     <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="MobileNumber" class="form-label"></label>
+            <input asp-for="MobileNumber" class="form-control type="text" value=@Model.MobileNumber/>
+            <span asp-validation-for="MobileNumber" class="text-danger"></span>
+        </div>
+    
+    
+        <div class="col-md-4">
+            <label asp-for="Nationality" class="form-label"></label>
+            <input asp-for="Nationality" class="form-control" value=@Model.Nationality/>
+            <span asp-validation-for="Nationality" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Salary" class="form-label"></label>
+            <input asp-for="Salary" class="form-control" value=@Model.Salary/>
+            <span asp-validation-for="Salary" class="text-danger"></span>
+        </div>
+        
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="ContractDate" class="form-label"></label>
+            <input asp-for="ContractDate" class="form-control" type="date" value="@Model.ContractDate.Year.ToString("D4")-@Model.ContractDate.Month.ToString("D2")-@Model.ContractDate.Day.ToString("D2")"/>
+            <span asp-validation-for="ContractDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="BirthDate" class="form-label"></label>
+            <input asp-for="BirthDate" class="form-control datepicker" type="date" value="@Model.BirthDate.Year.ToString("D4")-@Model.BirthDate.Month.ToString("D2")-@Model.BirthDate.Day.ToString("D2")"/>
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
+        </div>      
+     
+        <div class="col-md-4">
+            <label asp-for="AttendanceTime" class="form-label"></label>
+            <input asp-for="AttendanceTime" class="form-control" type="time" value="@Model.AttendanceTime.Hour.ToString("D2"):@Model.AttendanceTime.Minute.ToString("D2")"/>
+            <span asp-validation-for="AttendanceTime" class="text-danger"></span>
+        </div>
+     </div>
+     
+     <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="DepartureTime" class="form-label"></label>
+            <input asp-for="DepartureTime" class="form-control" type="time" value="@Model.DepartureTime.Hour.ToString("D2"):@Model.DepartureTime.Minute.ToString("D2")"/>
+            <span asp-validation-for="DepartureTime" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="DepartmentId" class="form-label"></label>
+            <select asp-for="DepartmentId" asp-items="DeptList" class="form-select">
+                <option selected disabled>Select Department...</option>
+            </select>
+            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+        </div>
+     </div>
+    <fieldset class="row mb-3">
+        <legend class="col-form-label pt-0">Gender</legend>
+        <div class="col-sm-10">
+            <div class="form-check">
+                <input asp-for="Gender" class="form-check-input" type="radio" id="male" name="Gender" value=0/>
+                <label for="male" class="form-check-label">Male</label>
+            </div>
+            <div class="form-check">
+                <input asp-for="Gender" class="form-check-input" type="radio" id="female" name="Gender" value=1/>
+                <label for="female" class="form-check-label">Female</label>
+            </div>
+         </div>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </fieldset>
+    <div class="col-12">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirm-update">Update</button>
+    </div>
+    <partial name="_UpdateConfirmationModal"/>
+</form>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

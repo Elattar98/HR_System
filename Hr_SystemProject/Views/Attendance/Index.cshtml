@@ -1,0 +1,92 @@
+﻿@model  HR_SystemProject.ViewModel.AttendanceViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    // drop list of employees..
+    SelectList EmpList = new SelectList(ViewBag.Employees, "ID", "name");
+
+    //model of Show partialView.. ( ViewBag.Attendances )
+}
+
+
+<partial name="ShowAll" model="@ViewBag.Attendances">
+
+<div class="mt-4">
+    
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title-wrap bar-success">
+                <h4 class="card-title">Request A Form</h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="px-3">
+                <form class="form form-horizontal" method="post" asp-controller="Attendance" asp-action="AttendanceForm">
+                    <div class="form-body">
+                        <div class="form-group row">
+                            <label class="col-md-3 label-control" for="projectinput7">Employee Name : </label>
+                            <div class="col-md-9">
+                                <select asp-for="Emp_Id" id="projectinput7" asp-items="EmpList" class="form-control">
+                                   <option value="0" disabled selected>Select Employee</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="Emp_Id"></span>
+                            </div>
+                        </div>
+        
+                        <div class="form-group row">
+                            <label class="col-md-3 label-control" for="projectinput9">Date: </label>
+                            <div class="col-md-9">
+                                <div class="position-relative has-icon-left">
+                                    <input type="date" id="timesheetinput3" asp-for="date" class="form-control">
+                                    <div class="form-control-position">
+                                        <i class="ft-message-square"></i>
+                                    </div>
+                                </div>
+                                <span class="text-danger" asp-validation-for="date"></span>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class=" row">
+                        <div class="col-md-12">
+                            <div class=" row form-group">
+                                <label class="col-md-3 label-control">Start time: </label>
+                                <div class="position-relative has-icon-left col-lg-9">
+                                    <input type="time" id="timesheetinput5" asp-for="checkIn" class="form-control">
+                                    <div class="form-control-position">
+                                        <i class="ft-clock"></i>
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="checkIn"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class=" row form-group">
+                                <label class="col-md-3 label-control">End time: </label>
+                                <div class="position-relative has-icon-left col-lg-9">
+                                    <input type="time" id="timesheetinput6" asp-for="checkOut" class="form-control">
+                                    <div class="form-control-position">
+                                        <i class="ft-clock"></i>
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="checkOut"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+   
+                        <input type="submit" class="btn btn-success" value="Save"/>
+                        @*<button type="submit" class="btn btn-success">
+                            <i class="icon-note"></i> Save
+                        </button>*@
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

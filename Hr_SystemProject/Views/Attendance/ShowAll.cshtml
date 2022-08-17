@@ -1,0 +1,99 @@
+﻿@model List<Attendence>
+@{
+    List<Attendence> AttendList = Model;
+}
+
+@if(AttendList != null)
+{ 
+    <div class="card">
+            <div class="card-header">
+                <div class="card-title-wrap bar-success">
+                    <h4 class="card-title">Attendance and departure request</h4>
+                </div>
+            </div>
+        
+            <!-- filter -->
+            <div class="card-block card-dashboard">
+                <p class="card-text">
+                    DataTables has most features enabled by default,
+                    so all you need to do to use it with your own ables is to call the construction
+                </p>
+            
+                <div id="DataTables_Table_0_filter" class="dataTables_filter d-flex justify-content-end">
+                    <input type="search" id="EmpNameSearch" onkeyup="FilterByName()" class="form-control m-4 form-control-sm rounded-pill col-5" placeholder="Search by employee name" aria-controls="DataTables_Table_0">
+                </div>
+                <div class="dataTables_length row" id="DataTables_Table_0_length">
+                    <label class="col-5">
+                        From:
+                        <input class="form-control" id="StartDateSearch" type="date" name="start"/>
+                    </label>
+                    <label class="col-5">
+                        To:
+                        <input class="form-control" id="EndDateSearch" type="date" name="end"/>
+                    </label>
+                    <div class="d-flex justify-content-end">
+                        <input type="button" class="btn col-2 btn-outline-info" value="show" onClick="ShowByTheseDates()"/>
+                    </div>
+                </div>
+            </div>      
+        
+            <!-- Attendances Table -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Id</th>
+                        <th>Date </th>
+                        <th>check-in time</th>
+                        <th>check-out time</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach(var item in AttendList)
+                {
+                    <tr>
+                        <td>@item.employee.name</td>
+                        <td>@item.Emp_Id</td>
+                        <td>@item.date</td>
+                        <td>@item.checkIn</td>
+                        <td>@item.checkOut</td>
+    @*                    <td>
+                            <a type="button" asp-route-date="@item.date.ToString()" asp-route-Emp_Id="@item.Emp_Id" asp-action="RemoveAttendance" asp-controller="Attendance"  class="btn btn-outline-danger mr-1" method="post">   
+                                <i class="icon-trash"></i>
+                            </a>
+                        </td>*@
+                    </tr>        
+                }                
+                </tbody>
+            </table>
+    </div>      
+}
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+
+    function FilterByName(){
+        var name = document.getElementById("EmpNameSearch").value;
+        $.ajax({
+            url: "/Attendance/DisplayAttendancesByName?name="+name,
+            success: function(result){
+                @AttendList = result;
+            }
+        })
+    }
+    function ShowByTheseDates(){
+        var start = document.getElementById("StartDateSearch").value;
+        var end = document.getElementById("EndDateSearch").value;
+        $.ajax({
+            url: "/Attendance/DisplayAttendancesBytwoDates?start="+start+"&end="+end,
+            success: function(result){
+                @AttendList = result;
+            }
+        })
+    }
+</script>

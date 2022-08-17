@@ -1,0 +1,140 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Hr_SystemProject
+build_property.RootNamespace = Hr_SystemProject
+build_property.ProjectDir = F:\Work\HR_SystemProject\Hr_SystemProject\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = F:\Work\HR_SystemProject\Hr_SystemProject
+build_property._RazorSourceGeneratorDebug = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Pages/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Attendance/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Attendance/ShowAll.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxTaG93QWxsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Attendance/_DeleteConfirmationPopUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXR0ZW5kYW5jZVxfRGVsZXRlQ29uZmlybWF0aW9uUG9wVXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Employee/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Employee/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcTmV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Employee/ShowAll.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcU2hvd0FsbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Employee/_TableRow.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcX1RhYmxlUm93LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/GeneralSettings/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2VuZXJhbFNldHRpbmdzXFVwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Role/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZVxOZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Salary/Show.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2FsYXJ5XFNob3cuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Shared/_DeleteConfirmationModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9EZWxldGVDb25maXJtYXRpb25Nb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Shared/_LoginLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Shared/_LoginLayout2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbkxheW91dDIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Shared/_ProcessStateModalPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9jZXNzU3RhdGVNb2RhbFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Shared/_UpdateConfirmationModal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9VcGRhdGVDb25maXJtYXRpb25Nb2RhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/User/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/User/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-is8mkcnn9f
+
+[F:/Work/HR_SystemProject/Hr_SystemProject/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-ix2m39929b

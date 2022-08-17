@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@model HR_SystemProject.ViewModel.RoleViewModel
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewData["Title"] = "New";
+    
+}
+
+<h1>AddNewRole</h1>
+<hr />
+
+
+        <form asp-action="New">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.RoleName" class="control-label"></label>
+                <input asp-for="@Model.RoleName" class="form-control" />
+                <span asp-validation-for="@Model.RoleName" class="text-danger"></span>
+            </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Page</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                           <tr>
+                            @for (var i = 0; i < Model.checkBox.Count; i++)
+                        {
+                            @if (@Model.checkBox[i].DisplayValue.Split('.')[2] == "VerifyDate"||@Model.checkBox[i].DisplayValue.Split('.')[2]=="Login"||@Model.checkBox[i].DisplayValue.Split('.')[2]=="Logout")
+                            {<td>
+                                <div class="form-check ms-3">
+                                    <input type="hidden" asp-for="@Model.checkBox[i].DisplayValue"/>
+                                                    <input type="hidden" class="form-check-input" asp-for="@Model.checkBox[i].IsChecked"/>
+                                                    
+                                                    
+                                                </div></td>
+                            }
+                            @if(@Model.checkBox[i].DisplayValue.Split('.')[2]!="VerifyDate"&&@Model.checkBox[i].DisplayValue.Split('.')[2]!="Login"&&@Model.checkBox[i].DisplayValue.Split('.')[2]!="Logout")
+                                {
+                                    
+                                
+                        @if(@Model.checkBox[i]==@Model.checkBox[0]||@Model.checkBox[i].DisplayValue.Split('.')[1]!=@Model.checkBox[i-1].DisplayValue.Split('.')[1])
+                                {
+                                    @:</tr><tr> 
+                                    <td><div class="p-3">@Model.checkBox[i].DisplayValue.Split('.')[1]</div></td>
+                                }
+                                            <td>
+                                                <div class="form-check ms-3 p-3">
+                                                    <label class="me-5" asp-for="@Model.checkBox[i].DisplayValue">@Model.checkBox[i].DisplayValue.Split('.')[2]</label>
+                                                    <input type="hidden" asp-for="@Model.checkBox[i].DisplayValue"/>
+                                                    <input class="form-check-input" asp-for="@Model.checkBox[i].IsChecked"/>
+                                                </div>
+                                            </td>     
+                                }
+                            }
+                          </tr>
+                        
+                        
+                    </tbody>
+                </table>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>

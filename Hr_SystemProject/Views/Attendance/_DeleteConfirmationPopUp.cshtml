@@ -1,0 +1,17 @@
+﻿@model Attendence
+
+<form method="post" asp-controller="Attendance" asp-action="RemoveAttendance" asp-route-Emp_Id="@Model.Emp_Id" asp-route-date="@Model.date">
+    <div class="modal fade" id="confirmDelete" tabindex="-1" data-backdrop="false">
+         <div class="modal-dialog modal-sm">
+             <div class="modal-content">
+                 <div class="modal-body">
+                     <h6>Are You Sure About That?!!</h6>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="submit" class="btn btn-danger">Delete</button>
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                 </div>
+             </div>
+         </div>
+    </div>
+</form>

@@ -1,0 +1,18 @@
+﻿@model Employee
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<td scope="row">@Model.name</td>
+<td scope="row">@Model.address</td>
+<td scope="row">@Model.phone</td>
+<td scope="row">@Model.gender</td>
+<td scope="row">@Model.nationality</td>
+<td scope="row">@Model.birthDate</td>
+<td scope="row">@Model.nationalID</td>
+<td scope="row">@Model.hiredate</td>
+<td scope="row">@Model.salary</td>
+<td scope="row">@Model.checkIn</td>
+<td scope="row">@Model.checkOut</td>
+<td scope="row" width=10%> <a class="btn btn-secondary px-4" asp-controller="Employee" asp-action="Edit" asp-route-id=@Model.ID>Edit</a> </td>
+<td scope="row" width=10%> <a class="btn btn-danger px-4" data-toggle="modal" data-target="#confirm-delete">Delete</a> </td>
+<partial name="_DeleteConfirmationModal" model="Model"/>

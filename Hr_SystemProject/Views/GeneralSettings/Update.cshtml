@@ -1,0 +1,46 @@
+﻿@using HR_SystemProject.ViewModel
+@model GeneralSettingsViewModel
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>Update</h1>
+<form method="post" asp-controller="GeneralSettings" asp-action="Save" type="text">
+    <div class="col-md-4">
+        <label asp-for="@Model.Bouns" class="form-label"></label>
+        <input asp-for="@Model.Bouns" class="form-control" />
+        <span asp-validation-for="@Model.Bouns" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="@Model.Discount" class="form-label"></label>
+        <input asp-for="@Model.Discount" class="form-control" />
+        <span asp-validation-for="@Model.Discount" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="@Model.vacation1" class="form-label"></label>
+        <select class="form-select" asp-for="@Model.vacation1" asp-items="Html.GetEnumSelectList<WeekDays>()">
+            <option selected disabled> --Select--</option>
+        </select>
+        <span asp-validation-for="@Model.vacation1" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="vacation2" class="form-label"></label>
+        <select class="form-select" asp-for="@Model.vacation2" asp-items="Html.GetEnumSelectList<WeekDays>()">
+            <option selected disabled>--Select--</option>
+        </select>
+        <span asp-validation-for="@Model.vacation2" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mt-2">
+        <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+

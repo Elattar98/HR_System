@@ -1,0 +1,21 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="modal fade" id="successModal" tabindex="-1" data-backdrop="true">
+     <div class="modal-dialog modal-dialog-centered modal-sm">
+         <div class="modal-content">
+             <div class="modal-body">
+                 <p>@TempData["message"].ToString()</p>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             </div>
+         </div>
+     </div>
+</div>
+<script>
+        $(document).ready(function(){
+        $('#successModal').modal('show');
+        });
+</script>
