@@ -15,13 +15,14 @@ namespace HR_SystemProject.Repositories
 
         public List<Attendence> GetAll()
         {
-            return DB.Attendence.Where(x=>x.IsDeleted!=true).Include(a => a.employee).ToList();
+            return DB.Attendence.Where(x=>x.IsDeleted!=true).Include(a => a.employee).ThenInclude(d=>d.department).ToList();
+        
         }
 
         //Select single attendance data using PK..
         public Attendence GetById(DateOnly date, int Emp_Id)
         {
-            return DB.Attendence.FirstOrDefault(a => a.Emp_Id == Emp_Id && a.date == date);
+            return DB.Attendence.FirstOrDefault(a => a.Emp_Id == Emp_Id && a.date == date && a.IsDeleted!=true);
         }
 
         //Add new attendance record..
@@ -66,8 +67,17 @@ namespace HR_SystemProject.Repositories
 
         public List<Attendence> GetById(int empId)
         {
-            List<Attendence> attendances = DB.Attendence.Where(a=>a.Emp_Id==empId).ToList();
+            List<Attendence> attendances = DB.Attendence.Where(a=>a.Emp_Id==empId && a.IsDeleted!=true).ToList();
             return attendances;
+        }
+        public void UpdateAttendance(DateOnly date, int Emp_Id, AttendanceViewModel editedAttendance)
+        {
+            Attendence updatedAttendance = GetById(date, Emp_Id);
+            updatedAttendance.date = DateOnly.FromDateTime(editedAttendance.date);
+            updatedAttendance.checkIn = TimeOnly.FromDateTime(editedAttendance.checkIn);
+            updatedAttendance.checkOut = TimeOnly.FromDateTime(editedAttendance.checkOut);
+            updatedAttendance.Emp_Id = editedAttendance.Emp_Id;
+            DB.SaveChanges();
         }
     }
 }

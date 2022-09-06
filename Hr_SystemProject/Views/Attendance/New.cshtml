@@ -1,0 +1,45 @@
+﻿@using HR_SystemProject.ViewModel
+@using Microsoft.AspNetCore.Authorization
+@model AttendanceViewModel
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewData["Title"] = "New";
+    SelectList EmpList = new SelectList(Model.employees, "ID", "name");
+}
+
+<h1 class="mb-5">Add Attendance</h1>
+<form class="row g-3" method="post" asp-controller="Attendance" asp-action="Save" type="text">
+    <div class="row mb-3">
+        <div class="col-md-3 ms-2">
+            <label asp-for="Emp_Id" class="form-label"></label>
+            <select asp-for="Emp_Id" asp-items="EmpList" class="form-select">
+                <option selected disabled>Select Employee...</option>
+            </select>
+            <span asp-validation-for="Emp_Id" class="text-danger"></span>
+        </div>
+
+        
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="date" class="form-label"></label>
+            <input asp-for="date" class="form-control datepicker" type="date" value="" />
+            <span asp-validation-for="date" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="checkIn" class="form-label"></label>
+            <input asp-for="checkIn" class="form-control" type="time" value="" />
+            <span asp-validation-for="checkIn" class="text-danger"></span>
+        </div>
+        <div class="col-md-4">
+            <label asp-for="checkOut" class="form-label"></label>
+            <input asp-for="checkOut" class="form-control" type="time" value="" />
+            <span asp-validation-for="checkOut" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-12 ms-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+

@@ -1,0 +1,50 @@
+﻿@using HR_SystemProject.ViewModel
+@using Microsoft.AspNetCore.Authorization
+@model List<UserViewModel>
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewData["Title"] = "Show";
+}
+
+<h1>Show</h1>
+<div class="row mb-3">
+    <div class="col-sm-12">
+        <div class="form-inline pull-right">
+            @if (AuthorizationService.AuthorizeAsync(User, "Permissions.UserController.Add").Result.Succeeded)
+            {
+                <a class="btn btn-primary" asp-action="Add" asp-controller="User"> NewUser</a>
+            }
+            
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        @foreach(var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.RoleName</td>
+                @if (AuthorizationService.AuthorizeAsync(User, "Permissions.UserController.Edit").Result.Succeeded)
+                {
+                    <td scope="row" width=10%> <a class="btn btn-secondary px-4" asp-action="Edit" asp-route-id="@user.userId">Edit</a> </td>
+                }
+                @if (AuthorizationService.AuthorizeAsync(User, "Permissions.UserController.Delete").Result.Succeeded)
+                {
+                    <td scope="row" width=10%> <a class="btn btn-danger px-4" data-toggle="modal" data-target="#confirm-delete">Delete</a> </td>
+                }
+                
+                
+            </tr>
+            <partial name="_DeleteConfirmationModal" model="user" />
+        }
+        
+    </tbody>
+</table>

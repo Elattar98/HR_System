@@ -1,0 +1,99 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@model HR_SystemProject.ViewModel.RoleViewModel
+@inject IAuthorizationService AuthorizationService
+@{
+    ViewData["Title"] = "Edit";
+    int cbIndex = 0;
+}
+
+<h1>Edit</h1>
+
+<form asp-action="Update" asp-route-id="@Model.RoleId">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="@Model.RoleName" class="control-label"></label>
+        <input asp-for="@Model.RoleName" class="form-control" value="@Model.RoleName"/>
+        <span asp-validation-for="@Model.RoleName" class="text-danger"></span>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Page</th>
+                <th>Show</th>
+                <th>Add</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.ControllerNames.Count; i++)
+            {
+                <tr>
+                        <td><div class="p-3">@Model.ControllerNames[i]</div></td>
+
+                        @for (var j = 0; j < Model.checkBox.Count; j++)
+                        {
+                        @if (@Model.checkBox[j].DisplayValue.Contains("Show") && @Model.ControllerNames[i] == Model.checkBox[j].DisplayValue.Split('.')[1].Split("Controller")[0])
+                            {
+                                <td>
+                                    <div class="form-check ms-3 p-3">
+                                        <input type="hidden" asp-for="@Model.checkBox[j].DisplayValue" />
+                                        <input class="form-check-input" asp-for="@Model.checkBox[j].IsChecked" />
+                                    </div>
+                                </td>
+                            }
+                        }
+                        @for (var j = 0; j < Model.checkBox.Count; j++)
+                        {
+                        @if ((@Model.checkBox[j].DisplayValue.Contains("Add") || @Model.checkBox[j].DisplayValue.Contains("New")) && @Model.ControllerNames[i] == Model.checkBox[j].DisplayValue.Split('.')[1].Split("Controller")[0])
+                            {
+                                <td>
+                                    <div class="form-check ms-3 p-3">
+                                        <input type="hidden" asp-for="@Model.checkBox[j].DisplayValue" />
+                                        <input class="form-check-input" asp-for="@Model.checkBox[j].IsChecked" />
+                                    </div>
+                                </td>
+                            }
+                        }
+                        @for (var j = 0; j < Model.checkBox.Count; j++)
+                        {
+                        @if ((@Model.checkBox[j].DisplayValue.Contains("Update") || @Model.checkBox[j].DisplayValue.Contains("Edit")) && @Model.ControllerNames[i] == Model.checkBox[j].DisplayValue.Split('.')[1].Split("Controller")[0])
+                            {
+                                <td>
+                                    <div class="form-check ms-3 p-3">
+                                        <input type="hidden" asp-for="@Model.checkBox[j].DisplayValue" />
+                                        <input class="form-check-input" asp-for="@Model.checkBox[j].IsChecked" />
+                                    </div>
+                                </td>
+                            }
+                        }
+                        @for (var j = 0; j < Model.checkBox.Count; j++)
+                        {
+                        @if (@Model.checkBox[j].DisplayValue.Contains("Delete") && @Model.ControllerNames[i] == Model.checkBox[j].DisplayValue.Split('.')[1].Split("Controller")[0])
+                            {
+                                <td>
+                                    <div class="form-check ms-3 p-3">
+                                        <input type="hidden" asp-for="@Model.checkBox[j].DisplayValue" />
+                                        <input class="form-check-input" asp-for="@Model.checkBox[j].IsChecked" />
+                                    </div>
+                                </td>
+                            }
+                        }
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+    @for (var j = 0; j < Model.checkBox.Count; j++)
+    {
+        if (!(@Model.checkBox[j].DisplayValue.Contains("Show") || @Model.checkBox[j].DisplayValue.Contains("Add") || @Model.checkBox[j].DisplayValue.Contains("New") || @Model.checkBox[j].DisplayValue.Contains("Edit") || @Model.checkBox[j].DisplayValue.Contains("Update") || @Model.checkBox[j].DisplayValue.Contains("Delete")))
+        {
+            <input type="hidden" asp-for="@Model.checkBox[j].DisplayValue" />
+            <input class="form-check-input" asp-for="@Model.checkBox[j].IsChecked" type="hidden"/>
+        }
+    }
+</form>

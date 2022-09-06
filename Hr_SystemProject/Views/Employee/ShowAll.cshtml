@@ -27,12 +27,11 @@
     @foreach (var item in Model)
       {
           <tr>
-              <partial name="_TableRow" model="item"/>
+              <partial name="_EmployeeTableRow" model="item"/>
           </tr>
       }
   </tbody>
 </table>
-<a asp-controller="Employee" asp-action="New" class="btn btn-primary">Add Employee</a>
 @*@foreach (var item in Model)
       {
             <partial name="_DeleteConfirmationModal" model="item"/>

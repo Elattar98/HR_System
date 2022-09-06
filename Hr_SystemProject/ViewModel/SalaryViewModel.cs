@@ -7,8 +7,8 @@
         public decimal Salary { get; set; }
         public int AttendanceNumber { get; set; }
         public int AbscenceNumber { get; set; }
-        public int AddTime { get; set; }
-        public int SubTime { get; set; }
+        public double AddTime { get; set; }
+        public double SubTime { get; set; }
         public decimal AllAdd { get; set; }
         public decimal AllSub { get; set; }
         public decimal OverallSalary { get; set; }

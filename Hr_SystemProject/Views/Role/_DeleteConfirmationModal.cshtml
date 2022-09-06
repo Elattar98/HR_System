@@ -1,0 +1,27 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@model IdentityRole
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<form method="post" asp-controller="Role" asp-action="Delete" asp-route-id="@Model.Id">
+    <div class="modal fade" id="popup_@Model.Id" tabindex="-1" data-backdrop="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h6>Are You Sure About That?!!</h6>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+

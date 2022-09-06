@@ -1,7 +1,9 @@
-﻿using HR_SystemProject.ViewModel;
+﻿using HR_SystemProject.Models;
+using HR_SystemProject.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Reflection;
 using System.Security.Claims;
 
@@ -15,32 +17,35 @@ namespace HR_SystemProject.Controllers
         {
             this.roleManager = roleManager;
         }
+        [Authorize("Permissions.RoleController.Show")]
+        public IActionResult Show()
+        {
+            List<IdentityRole> roles = roleManager.Roles.ToList();
+
+            return View(roles);
+        }
         [HttpGet]
         [Authorize("Permissions.RoleController.New")]
         //[AllowAnonymous]
         public IActionResult New()
         {
             RoleViewModel roleView = new RoleViewModel();
-            roleView.checkBox = new List<CheckBox>();
-            roleView.ControllerNames = new List<string>();
-            Permissions permissions = new Permissions();
 
-            foreach(var con in permissions.controllerDatas)
+            foreach(var con in Permissions.controllerDatas)
             {
-                if (!roleView.ControllerNames.Contains(con.ControllerName))
-                {
-                    roleView.ControllerNames.Add(con.ControllerName);
-                }
-                    foreach (var act in con.Actions )
+                    foreach (var permission in Permissions.permissions.Where(p=>p.Contains(con.ControllerName)).ToList() )
                     {
-                        roleView.checkBox.Add(new CheckBox() { DisplayValue = act.DisplayValue, IsChecked = false });
+                    if (!roleView.ControllerNames.Contains(permission.Split(".")[1].Split("Controller")[0]))
+                    {
+                        roleView.ControllerNames.Add(permission.Split(".")[1].Split("Controller")[0]);
+                    }
+                    roleView.checkBox.Add(new CheckBox() { DisplayValue = permission, IsChecked = false });
                     }
                 
             }
             return View(roleView);
         }
         [HttpPost]
-        [Authorize("Permissions.RoleController.New")]
         //[AllowAnonymous]
         public async Task<IActionResult> New(RoleViewModel roleViewModel)
         {
@@ -71,19 +76,17 @@ namespace HR_SystemProject.Controllers
             }
             else
             {
-                roleViewModel.checkBox = new List<CheckBox>();
                 roleViewModel.ControllerNames = new List<string>();
-                Permissions permissions = new Permissions();
 
-                foreach (var con in permissions.controllerDatas)
+                foreach (var con in Permissions.controllerDatas)
                 {
-                    if (!roleViewModel.ControllerNames.Contains(con.ControllerName))
+                    foreach (var permission in Permissions.permissions.Where(p => p.Contains(con.ControllerName)).ToList())
                     {
-                        roleViewModel.ControllerNames.Add(con.ControllerName);
-                    }
-                    foreach (var act in con.Actions)
-                    {
-                        roleViewModel.checkBox.Add(new CheckBox() { DisplayValue = act.DisplayValue, IsChecked = false });
+                        if (!roleViewModel.ControllerNames.Contains(permission.Split(".")[1].Split("Controller")[0]))
+                        {
+                            roleViewModel.ControllerNames.Add(permission.Split(".")[1].Split("Controller")[0]);
+                        }
+                        roleViewModel.checkBox.Add(new CheckBox() { DisplayValue = permission, IsChecked = false });
                     }
 
                 }
@@ -91,6 +94,94 @@ namespace HR_SystemProject.Controllers
             }
             
             return RedirectToAction("New");
+        }
+        [Authorize("Permissions.RoleController.Edit")]
+        public async Task<IActionResult> Edit(string id)
+        {
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+            RoleViewModel roleViewModel = new RoleViewModel();
+            roleViewModel.RoleId = role.Id;
+            roleViewModel.RoleName = role.Name;
+            var roleClaims = roleManager.GetClaimsAsync(role).Result.Select(c => c.Value).ToList();
+            var allPermissions = Permissions.permissions;
+
+            foreach (var permission in allPermissions)
+            {
+                if (!roleViewModel.ControllerNames.Contains(permission.Split(".")[1].Split("Controller")[0]))
+                {
+                    roleViewModel.ControllerNames.Add(permission.Split(".")[1].Split("Controller")[0]);
+                }
+                if (roleClaims.Any(c => c == permission))
+                {
+                    roleViewModel.checkBox.Add(new CheckBox() { DisplayValue = permission, IsChecked = true });
+                }
+                else
+                {
+                    roleViewModel.checkBox.Add(new CheckBox() { DisplayValue = permission, IsChecked = false });
+                }
+                
+            }
+            return View(roleViewModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(string id, RoleViewModel editedRole)
+         {
+            if(editedRole.checkBox==null)
+            {
+                IdentityRole updatedRole = await roleManager.FindByIdAsync(id);
+                updatedRole.Name = editedRole.RoleName;
+                return RedirectToAction("Show");
+            }
+            if (ModelState.IsValid)
+            {
+                IdentityRole updatedRole = await roleManager.FindByIdAsync(id);
+                updatedRole.Name = editedRole.RoleName;
+                foreach (var claim in roleManager.GetClaimsAsync(updatedRole).Result)
+                {
+                    await roleManager.RemoveClaimAsync(updatedRole, claim);
+                }
+                var selectedClaims = editedRole.checkBox.Where(c => c.IsChecked).ToList();
+                foreach (var claim in selectedClaims)
+                {
+                    await roleManager.AddClaimAsync(updatedRole, new Claim("Permission", claim.DisplayValue));
+                }
+                
+                return RedirectToAction("Show");
+            }
+            else
+            {
+                IdentityRole role = await roleManager.FindByIdAsync(id);
+                var roleClaims = roleManager.GetClaimsAsync(role).Result.Select(c => c.Value).ToList();
+                var allPermissions = Permissions.permissions;
+
+                foreach (var permission in allPermissions)
+                {
+                    if (!editedRole.ControllerNames.Contains(permission.Split(".")[1].Split("Controller")[0]))
+                    {
+                        editedRole.ControllerNames.Add(permission.Split(".")[1].Split("Controller")[0]);
+                    }
+                    if (roleClaims.Any(c => c == permission))
+                    {
+                        editedRole.checkBox.Add(new CheckBox() { DisplayValue = permission, IsChecked = true });
+                    }
+                    else
+                    {
+                        editedRole.checkBox.Add(new CheckBox() { DisplayValue = permission, IsChecked = false });
+                    }
+
+                }
+                TempData["message"] = "There's a problem. Please Check What you entered again.";
+                return View("Edit", editedRole);
+            }
+        }
+        [Authorize("Permissions.RoleController.Delete")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+            await roleManager.DeleteAsync(role);
+            TempData["message"] = "Deleted Successfully";
+            return RedirectToAction("Show");
         }
     }
 }

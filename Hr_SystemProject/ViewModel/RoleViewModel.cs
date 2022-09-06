@@ -6,10 +6,11 @@ namespace HR_SystemProject.ViewModel
 {
     public class RoleViewModel
     {
+        public string? RoleId { get; set; }
         [Required]
         public string RoleName { get; set; }
-        public List<CheckBox> checkBox { get; set; }
-        public List<string>? ControllerNames { get; set; }
+        public List<CheckBox> checkBox { get; set; } = new List<CheckBox>();
+        public List<string> ControllerNames { get; set; } = new List<string>();
         
     }
     public class ControllerData
@@ -25,11 +26,23 @@ namespace HR_SystemProject.ViewModel
         public string DisplayValue
             => $"Permissions.{ControllerName}.{ActionName}";
     }
-    public class Permissions
+    public static class Permissions
     {
-        public List<ControllerData> controllerDatas { get; set; } = Permissions.GenerateControllerActionList();
-        
+        public static List<ControllerData> controllerDatas { get; set; } = Permissions.GenerateControllerActionList();
 
+        public static List<string> permissions = GeneratePermissions();
+        public static List<string> GeneratePermissions()
+        {
+            List<string> genPermissions = new List<string>();
+            foreach (var con in controllerDatas)
+            {
+                foreach(var act in con.Actions)
+                {
+                    genPermissions.Add(act.DisplayValue);
+                }
+            }
+            return genPermissions;
+        }
         public static List<ControllerData> GenerateControllerActionList()
         {
             Assembly asm = Assembly.GetExecutingAssembly();

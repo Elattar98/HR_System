@@ -13,7 +13,7 @@ namespace HR_SystemProject.Repositories
         List<Attendence> GetByEmpName(string name);
         List<Attendence> GetById(int empId);
         List<Attendence> GetbyPeriodOfDate(DateTime start, DateTime end);
-
+        public void UpdateAttendance(DateOnly date, int Emp_Id, AttendanceViewModel editedAttendance);
 
     }
 }

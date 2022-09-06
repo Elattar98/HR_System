@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@model List<Attendence>
+@inject IAuthorizationService AuthorizationService
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+ }
+<div class="col-sm-12 mt-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Department</th>
+                <th scope="col">Employee Name</th>
+                <th scope="col">Attend Time</th>
+                <th scope="col">Departure Time</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {                
+                    @*<partial name="_AttendanceTableRowPartial" model="@item"/>*@
+                <tr>                    
+                    <td scope="row">@item.employee.department.Name</td>
+                    <td scope="row">@item.employee.name</td>
+                    <td scope="row">@item.checkIn</td>
+                    <td scope="row">@item.checkOut</td>
+                    <td scope="row">@item.date</td>
+                                        
+                    @if (AuthorizationService.AuthorizeAsync(User, "Permissions.AttendanceController.Edit").Result.Succeeded)
+                    {
+                       <td scope="row" width=10%> <a class="btn btn-secondary px-4" asp-controller="Attendance" asp-action="Edit" asp-route-date="@item.date" asp-route-empId="@item.Emp_Id">Edit</a> </td>
+                    }
+                    @if (AuthorizationService.AuthorizeAsync(User, "Permissions.AttendanceController.Delete").Result.Succeeded)
+                    {
+                        <td scope="row" width=10%> <a class="btn btn-danger px-4" data-toggle="modal" data-target="#popup_@item.Emp_Id@String.Join("", @item.date.ToString().Split("/"))">Delete</a> </td>
+                    }
+                    
+                    <partial name="_DeleteConfirmationModal" model="@item" />
+                </tr>
+                                
+            }
+        </tbody>
+    </table>
+</div>

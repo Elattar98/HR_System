@@ -1,0 +1,47 @@
+﻿@using Hr_SystemProject.ViewModel
+@using Microsoft.AspNetCore.Authorization
+
+@model List<SalaryViewModel>
+@inject IAuthorizationService AuthorizationService
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">EmpName</th>
+            <th scope="col">Department</th>
+            <th scope="col">Salary</th>
+            <th scope="col">AttendDays</th>
+            <th scope="col">AbsenceDays</th>
+            <th scope="col">AddTime</th>
+            <th scope="col">SubTime</th>
+            <th scope="col">AllAdd</th>
+            <th scope="col">AllSub</th>
+            <th scope="col">OverallSalary</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in @Model)
+        {
+            <tr>
+                <td scope="row">@item.Name</td>
+                <td scope="row">@item.Department</td>
+                <td scope="row">@item.Salary</td>
+                <td scope="row">@item.AttendanceNumber</td>
+                <td scope="row">@item.AbscenceNumber</td>
+                <td scope="row">@item.AddTime.ToString("0.##")</td>
+                <td scope="row">@item.SubTime.ToString("0.##")</td>
+                <td scope="row">@item.AllAdd.ToString("0.##")</td>
+                <td scope="row">@item.AllSub.ToString("0.##")</td>
+                <td scope="row">@item.OverallSalary.ToString("0.##")</td>
+            </tr>
+
+        }
+    </tbody>
+
+</table>

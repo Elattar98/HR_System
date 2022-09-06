@@ -8,89 +8,104 @@ namespace HR_SystemProject.Controllers
 {
     public class AttendanceController : Controller
     {
-        IAttendanceRepository attendanceRepo;
-        IEmployeeRepository employeeRepo;
-        public AttendanceController(IAttendanceRepository attendanceRepo, IEmployeeRepository employeeRepo)
+        IAttendanceRepository AttendanceRepository;
+        IEmployeeRepository EmployeeRepository;
+        public AttendanceController(IAttendanceRepository AttendanceRepo, IEmployeeRepository EmployeeRepo)
         {
-            this.attendanceRepo = attendanceRepo;
-            this.employeeRepo = employeeRepo;
+            AttendanceRepository = AttendanceRepo;
+            EmployeeRepository = EmployeeRepo;
         }
-        [Authorize("Permissions.AttendanceController.Index")]
-        public IActionResult Index()
+        [Authorize("Permissions.AttendanceController.New")]
+        public IActionResult New()
         {
-            ViewBag.Attendances = attendanceRepo.GetAll();
-            ViewBag.Employees = employeeRepo.GetAll();
-
-            return View();
+            AttendanceViewModel model = new AttendanceViewModel();
+            model.employees = EmployeeRepository.GetAll();
+            return View(model);
         }
-
-        //for table of attendances..
-        [Authorize("Permissions.AttendanceController.ShowAll")]
-        public IActionResult ShowAll()
-        {
-            return PartialView();
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize("Permissions.AttendanceController.AttendanceForm")]
-        public IActionResult AttendanceForm(AttendanceViewModel newAttend)
+        public IActionResult Save(AttendanceViewModel newattendance)
         {
             if (ModelState.IsValid)
             {
-                attendanceRepo.AddAttendance(newAttend);
-                return RedirectToAction("Index");
+                try
+                {
+                    AttendanceRepository.AddAttendance(newattendance);
+                    TempData["message"] = "Added Successfully";
+                    return RedirectToAction("New");
+                }
+                catch (Exception ex)
+                {
+
+                    ModelState.AddModelError(String.Empty, ex.Message.ToString());
+                    return View("New", newattendance);
+
+                }
 
             }
-
-            return RedirectToAction("AttendanceForm", newAttend);
-            
-        }
-        /* Validation on attendance date */
-        //[Authorize("Permissions.AttendanceController.CheckDate")]
-        public IActionResult CheckDate(DateTime date, int Emp_id)
-        {
-            Employee Emp = employeeRepo.GetByID(Emp_id);
-            if(DateOnly.FromDateTime(date) < Emp.hiredate)
+            else
             {
-                return Json($"Attendance date starts from hire date({Emp.hiredate})");
+                newattendance.employees = EmployeeRepository.GetAll();
+                TempData["message"] = "There's a problem. Please Check What you entered again.";
+                return View("New", newattendance);
             }
-            return Json(true);
         }
-
-        /* Validation on attendance time */
-        //[Authorize("Permissions.AttendanceController.CheckAttendTime")]
-        public IActionResult CheckAttendTime(DateTime checkIn, int Emp_id)
+        [Authorize("Permissions.AttendanceController.Show")]
+        public IActionResult Show()
         {
-            Employee Emp = employeeRepo.GetByID(Emp_id);
-            if (TimeOnly.FromDateTime(checkIn) < Emp.checkIn)
-            {
-                return Json($"Attendance starts from ({Emp.checkIn})");
-            }
-            return Json(true);
+            List<Attendence> attendences = AttendanceRepository.GetAll();
+            return View(attendences);
         }
-
-        /* Filter using name */
-        //[Authorize("Permissions.AttendanceController.DisplayAttendancesByName")]
-        public IActionResult DisplayAttendancesByName(string name)
+        [Authorize("Permissions.AttendanceController.Delete")]
+        public IActionResult Delete(DateTime date, int empId)
         {
-            return Json(attendanceRepo.GetByEmpName(name));
+            AttendanceRepository.DeleteAttendance(DateOnly.FromDateTime(date), empId);
+            TempData["message"] = "Deleted Successfully";
+            return RedirectToAction("Show");
         }
-
-        /* Filter using range dates */
-        //[Authorize("Permissions.AttendanceController.DisplayAttendancesByTwoDates")]
-        public IActionResult DisplayAttendancesBytwoDates(DateTime start, DateTime end)
+        [Authorize("Permissions.AttendanceController.Edit")]
+        public IActionResult Edit(DateTime date, int empId)
         {
-            return Json(attendanceRepo.GetbyPeriodOfDate(start, end));
-        }
+            Attendence attendence = AttendanceRepository.GetById(DateOnly.FromDateTime(date), empId);
+            AttendanceViewModel model = new AttendanceViewModel();
+            model.date = attendence.date.ToDateTime(TimeOnly.MinValue);
+            model.checkOut = DateTime.MinValue.Add(attendence.checkOut.ToTimeSpan());
+            model.checkIn = DateTime.MinValue.Add(attendence.checkIn.ToTimeSpan());
+            model.Emp_Id = empId;
+            model.employees = EmployeeRepository.GetAll();
+            return View(model);
 
+        }
         [HttpPost]
-        [Authorize("Permissions.AttendanceController.RemoveAttendance")]
-        public IActionResult RemoveAttendance(string dateString  ,int Emp_Id)
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(DateTime date, int empId, AttendanceViewModel attendanceViewModel)
         {
-            DateOnly date = DateOnly.Parse(dateString);
-            attendanceRepo.DeleteAttendance(date, Emp_Id);
-            return RedirectToAction("Index");
+            if(ModelState.IsValid)
+            {
+                AttendanceRepository.UpdateAttendance(DateOnly.FromDateTime(date), empId, attendanceViewModel);
+                TempData["message"] = "Updated Successfully";
+                return RedirectToAction("Show");
+            }
+            else
+            {
+                attendanceViewModel.employees = EmployeeRepository.GetAll();
+                TempData["message"] = "There's a problem. Please Check What you entered again.";
+                return View("Edit", attendanceViewModel);
+            }
+        }
+        public IActionResult Search(string searchText, DateTime startDate, DateTime endDate)
+        {
+            List<Attendence> attendences = AttendanceRepository.GetAll();
+            attendences = attendences.
+                Where(a => a.date.ToDateTime(TimeOnly.MinValue) <= endDate && a.date.ToDateTime(TimeOnly.MinValue) >= startDate).ToList();
+            if (searchText!=null)
+            {
+                List<Attendence> result = attendences.
+                    Where(a => a.employee.name.ToLower().Contains(searchText.ToLower())||a.employee.department.Name.ToLower().Contains(searchText.ToLower())).ToList();
+                return PartialView("_AttendanceTableViewPartial", result);
+            }
+            return PartialView("_AttendanceTableViewPartial", attendences);
+            
         }
     }
 }

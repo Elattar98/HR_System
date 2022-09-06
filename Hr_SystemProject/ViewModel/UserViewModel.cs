@@ -5,6 +5,7 @@ namespace HR_SystemProject.ViewModel
 {
     public class UserViewModel
     {
+        public string? userId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -18,8 +19,7 @@ namespace HR_SystemProject.ViewModel
         [Required]
         [Display(Name="Roles")]
         public string RoleId { get; set; }
+        public string? RoleName { get; set; }
         public List<IdentityRole>? Roles { get; set; }
-        //[Required]
-        //public string? RoleId { get; set; }
     }
 }

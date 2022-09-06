@@ -1,45 +1,92 @@
-﻿@using Hr_SystemProject.ViewModel
+﻿@using System.Globalization
 @using Microsoft.AspNetCore.Authorization
-@model List<SalaryViewModel>
 @inject IAuthorizationService AuthorizationService
 @{
     ViewData["Title"] = "Show";
+    var months = Enumerable.Range(1, 12).Select(i => new
+    {
+        A = i,
+        B = DateTimeFormatInfo.CurrentInfo.GetMonthName(i)
+    });
 }
 
-<h1>Show</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">EmpName</th>
-            <th scope="col">Department</th>
-            <th scope="col">Salary</th>
-            <th scope="col">AttendDays</th>
-            <th scope="col">AbsenceDays</th>
-            <th scope="col">AddTime</th>
-            <th scope="col">SubTime</th>
-            <th scope="col">AllAdd</th>
-            <th scope="col">AllSub</th>
-            <th scope="col">OverallSalary</th>
-        </tr>
-        
-    </thead>
-    <tbody>
-        @foreach (var item in @Model)
-        {
-            <tr>
-                <td scope="row">@item.Name</td>
-                <td scope="row">@item.Department</td>
-                <td scope="row">@item.Salary</td>
-                <td scope="row">@item.AttendanceNumber</td>
-                <td scope="row">@item.AbscenceNumber</td>
-                <td scope="row">@item.AddTime</td>
-                <td scope="row">@item.SubTime</td>
-                <td scope="row">@item.AllAdd</td>
-                <td scope="row">@item.AllSub.ToString("0.##")</td>
-                <td scope="row">@item.OverallSalary.ToString("0.##")</td>
-            </tr>
+<h1>Salary Report</h1>
+<div class="row mb-3">
+    <div class="col-sm-12">
+        <div class="form-inline pull-right">
+            <label>Search</label>
+            <input type="text" class="form-control" id="searchtxt" placeholder="Search by Name or Department" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label class="form-label">Year</label>
+            <select class="form-control" id="yearbox">
+            <option selected disabled>Select Year...</option>
+            @for(int i= DateTime.Now.Year-10; i<=DateTime.Now.Year; i++)
+            {
+                @if (i==DateTime.Now.Year)
+                {
+                        <option value="@i" selected>@i</option>
+                }else{
+                        <option value="@i">@i</option>
+                }
+                
+            }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Month</label>
+            <select class="form-control" id="monthbox">
+            <option selected disabled>Select Month...</option>
+            @foreach(var month in months)
+            {
+                    @if (month.A == DateTime.Now.Month)
+                    {
+                        <option value="@month.A" selected>@month.B.ToString()</option>
+                    }else{
+                        <option value="@month.A">@month.B.ToString()</option>
+                    }
+                
+            }
+            </select>
+        </div>
+    </div>
+</div>
+<div id="salaryTable"></div>
 
-        }
-    </tbody>
-    
-</table>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $(() => {
+        getSalary();
+
+        $('#searchtxt').on('keyup', () => {
+            getSalary();
+        });
+        $('#yearbox').on('change', () => {
+            getSalary();
+        });
+        $('#monthbox').on('change', () => {
+            getSalary();
+        });
+    });
+
+    function getSalary() {
+        $.ajax({
+            url: '@Url.Action("Search", "Salary")',
+            datatype: 'html',
+            method: 'GET',
+            data: { searchText: $('#searchtxt').val(), year: $('#yearbox').val(), month: $('#monthbox').val() },
+            success: function (res) {
+                $('#salaryTable').html('').html(res);
+                console.log(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+</script>

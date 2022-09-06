@@ -44,31 +44,34 @@
             <div class="sidebar-content">
                <div class="nav-container">
                   <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
-                     <li class="nav-item home"><a href="#"><i class="icon-home"></i><span data-i18n=""
+                        <li class="nav-item home">
+                            <a asp-action="Index" asp-controller="Home">
+                                <i class="icon-home"></i><span data-i18n=""
                         class="menu-title">Dashboard</span></a>
                      </li>
                      <li class="has-sub nav-item">
-                        <a asp-action="ShowAll" asp-controller="Employee"><i class="icon-users"></i><span data-i18n="" class="menu-title"> Employees</span></a>
+                        <a><i class="icon-users"></i><span data-i18n="" class="menu-title"> Employees</span></a>
                         <ul class="menu-content">
-                           <li><a href="employees.html" class="menu-item"> <i class="icon-bar"></i> Employees Statistics</a>
+                                <li>
+                                    <a asp-action="ShowAll" asp-controller="Employee" class="menu-item"> <i class="icon-bar"></i> Employees Statistics</a>
                            </li>
                            <li><a asp-action="New" asp-controller="Employee" class="menu-item">Add Employee</a>
                            </li>
                         </ul>
                      </li>
-                     <li class=" nav-item"><a asp-action="New" asp-controller="Employee"><i class="icon-note"></i><span data-i18n="" class="menu-title">Add Employee</span></a>
+                     <li class=" nav-item"><a asp-action="New" asp-controller="Attendance"><i class="icon-note"></i><span data-i18n="" class="menu-title">Add Attendance</span></a>
                      </li>
                      <li class=" nav-item"><a asp-action="Update" asp-controller="GeneralSettings"><i class="icon-pie-chart"></i><span data-i18n="" class="menu-title">
                         General Settings</span></a>
                      </li>
-                     <li class=" nav-item"><a asp-action="Index" asp-controller="Attendance"><i class="icon-support"></i><span data-i18n="" class="menu-title">
+                     <li class=" nav-item"><a asp-action="Show" asp-controller="Attendance"><i class="icon-support"></i><span data-i18n="" class="menu-title">
                         Attendance</span></a>
                      </li>
                      <li class=" nav-item"><a asp-action="Show" asp-controller="Salary"><i class="icon-layers"></i><span data-i18n="" class="menu-title">Salary report</span></a>
                      </li>
-                     <li class=" nav-item"><a asp-action="Add" asp-controller="User"><i class="icon-users"></i><span data-i18n="" class="menu-title">Users</span></a>
+                     <li class=" nav-item"><a asp-action="Show" asp-controller="User"><i class="icon-users"></i><span data-i18n="" class="menu-title">Users</span></a>
                      </li>
-                     <li class=" nav-item"><a asp-action="New" asp-controller="Role"><i class="icon-equalizer"></i><span data-i18n="" class="menu-title">Permissions</span></a>
+                     <li class=" nav-item"><a asp-action="Show" asp-controller="Role"><i class="icon-equalizer"></i><span data-i18n="" class="menu-title">Permissions</span></a>
                      </li>
                     
                      <li class=" nav-item"><a asp-action="Logout" asp-controller="User"><i class="icon-pin"></i><span data-i18n="" class="menu-title">Logout </span></a>
